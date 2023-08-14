@@ -1,0 +1,16 @@
+# Gene set generated on 2023-04-04T15:55:24 using cellxgene version 1.1.1
+# Input data file was write/human_combined_final.h5ad, which was last modified on 2023-04-04T15:07:25
+gene_set_name,gene_set_description,gene_symbol,gene_description
+Peri-vasc,,ACTA2,
+Peri-vasc,,NANOG,
+Peri-vasc,,JAG1,
+Peri-vasc,,DCN,
+Peri-vasc,,TAGLN,
+Vaculature,,PDPN,
+Vaculature,,OLFML3,
+Vaculature,,MECOM,
+Vaculature,,POSTN,
+Vaculature,,LDHA,
+Vaculature,,NOS2,
+Vaculature,,FGF1,
+Vaculature,,RUNX1,
