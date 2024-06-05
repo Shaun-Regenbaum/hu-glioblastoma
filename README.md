@@ -1,6 +1,6 @@
 ## Robotic Generation and Kinetic Screening of Patient-Derived Glioblastoma Organoids Reveal Pharmaceutical Dynamics
 
-This repository contains all the single cell code relevant to Yuval Daskal and Shaun Regenbaum's code.
+This repository contains all the single cell code relevant to Yuval Daskal and Shaun Regenbaum's paper.
 It also contains the relevant cell profiler pipelines.
 
 In addition, the git history has been retained for the sake of transparency.
