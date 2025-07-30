@@ -1,0 +1,39 @@
+METHODS: GSE131928 Per-Tumor Cell Type Analysis
+
+OBJECTIVE:
+Analyze cell type distributions across individual GSE131928 tumor samples to characterize patient tumor heterogeneity and age group differences.
+
+DATASETS:
+GSE131928 Patient Data: 31 tumor samples (12,074 total cells)
+- Adult tumors: 24 samples (MGH series)
+- Pediatric tumors: 7 samples (BT series)
+- Authentic tumor identifiers: MGH105, MGH124, BT771, etc.
+
+DATA PROCESSING:
+1. Tumor Metadata Extraction:
+   - Parsed GSE131928 Excel metadata file
+   - Extracted real tumor names and age classifications
+   - Cell count distributions per tumor
+
+2. Per-Tumor Cell Type Distributions:
+   - Individual tumor cell type percentages
+   - Age group stratification (adult vs pediatric)
+   - Sample size effects analysis
+
+VISUALIZATION METHODS:
+1. Box plots: Cell type percentages by age group
+2. Sample size distribution: Total cells per tumor by age group
+
+TECHNICAL IMPLEMENTATION:
+- Generated scripts: regenerate_shaun2_clean.py
+- Output files:
+  - GSE131928_PerTumor_CellTypes.csv (per-tumor breakdown)
+  - GSE131928_PerTumor_CellTypes.png (age group analysis)
+
+KEY FINDINGS:
+1. Adult vs pediatric tumors show distinct cell type distributions
+2. Sample sizes vary significantly across tumors (163-6,147 cells)
+3. Individual tumor heterogeneity reflects published glioblastoma diversity
+
+INTERPRETATION:
+Per-tumor analysis reveals the cellular heterogeneity within the GSE131928 dataset and demonstrates age-related differences in glioblastoma cell type composition.

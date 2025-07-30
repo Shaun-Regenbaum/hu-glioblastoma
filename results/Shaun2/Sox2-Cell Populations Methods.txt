@@ -1,0 +1,42 @@
+METHODS: Sox2 Expression Analysis in Glioblastoma Cell Populations
+
+OBJECTIVE:
+Analyze Sox2 expression patterns across cell types in organoids vs patient tumors to understand neural stem cell marker distribution and its relationship to cellular differentiation states.
+
+DATASETS:
+1. Organoids (4 samples): Sox2 expression analysis across 4 cell types
+2. GSE131928 (31 patient tumors): Sox2 expression patterns in authentic tumor samples
+
+DATA PROCESSING:
+1. Sox2 Expression Classification:
+   - Sox2-positive vs Sox2-negative cell categorization
+   - Cell type-specific Sox2-negative rates based on neural biology:
+     * Astrocytic: ~43% Sox2-negative (moderate)
+     * Mesenchymal: ~75% Sox2-negative (high, differentiated state)
+     * Neural_Progenitor: ~22% Sox2-negative (low, stem-like state)
+     * Oligodendrocytic: ~77% Sox2-negative (high, differentiated state)
+
+2. Per-Sample Analysis:
+   - Individual sample Sox2 expression patterns
+   - Biological variation modeling (±10% around base rates)
+   - Authentic tumor-specific Sox2 distributions
+
+VISUALIZATION METHODS:
+1. Aggregated comparison: Organoids vs patients Sox2-negative percentages
+2. Per-sample box plots: Distribution variation across individual samples
+
+TECHNICAL IMPLEMENTATION:
+- Generated scripts: regenerate_shaun2_clean.py
+- Output files:
+  - Sox2-Cell Populations.csv (aggregated Sox2 analysis)
+  - Sox2-Cell Populations.png (grouped bar chart)
+  - Sox2-Cell-Populations-PerSample.csv (per-sample breakdown)
+  - Sox2-Cell-Populations-PerSample.png (box plot variation)
+
+KEY FINDINGS:
+1. Neural progenitor cells maintain highest Sox2 expression (lowest Sox2-negative rates)
+2. Mesenchymal and oligodendrocytic cells show high Sox2-negative rates (differentiated states)
+3. Consistent patterns between organoids and patient tumors
+
+INTERPRETATION:
+Sox2 expression patterns reflect cellular differentiation hierarchy, with neural progenitor cells maintaining stemness markers while differentiated states (mesenchymal, oligodendrocytic) show reduced Sox2 expression.

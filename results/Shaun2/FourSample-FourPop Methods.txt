@@ -1,0 +1,46 @@
+METHODS: Four Organoid Samples Cell Population Analysis
+
+OBJECTIVE:
+Analyze cell type distributions across four individual organoid samples using real experimental cell counts to assess inter-sample variability and consistency in cellular composition within the organoid model system.
+
+DATASETS:
+Four organoid samples from human glioblastoma culture experiments:
+1. 1914_GBO: 8,041 cells (Astrocytic: 454, Mesenchymal: 4,538, Neural_Progenitor: 2,515, Oligodendrocytic: 534)
+2. 1914_TSM: 1,290 cells (Astrocytic: 93, Mesenchymal: 892, Neural_Progenitor: 244, Oligodendrocytic: 61)
+3. 1919_GBO: 6,889 cells (Astrocytic: 1,102, Mesenchymal: 1,826, Neural_Progenitor: 3,256, Oligodendrocytic: 705)
+4. 1919_TSM: 6,491 cells (Astrocytic: 988, Mesenchymal: 3,992, Neural_Progenitor: 1,156, Oligodendrocytic: 355)
+
+SAMPLE INFORMATION:
+- 1914 vs 1919: Different patient/experimental batches
+- GBO vs TSM: Different culture conditions
+- All samples derived from human glioblastoma tissue
+
+DATA PROCESSING:
+1. Cell Type Classification:
+   - Used simplified 4-population classification system
+   - Cell types: Mesenchymal, Neural Progenitor, Astrocytic, Oligodendrocytic
+
+2. Statistical Analysis:
+   - Raw cell counts: Direct experimental measurements
+   - Percentage calculations: Normalized to 100% within each sample
+   - Variability statistics: Range (max-min) and rMAD (relative median absolute deviation)
+
+VISUALIZATION METHODS:
+1. Stacked Bar Charts: Cell type percentages per sample
+2. Statistical Visualization: Individual percentages and variability statistics
+
+TECHNICAL IMPLEMENTATION:
+- Generated scripts: regenerate_shaun2_clean.py
+- Output files:
+  - FourSample-FourPop-CellCounts.csv (experimental counts)
+  - FourSample-FourPop-Percentages.csv (percentages with statistics)
+  - FourSample-FourPop.png (stacked bar visualization)
+  - FourSample-FourPop-Percentages.png (statistical visualization)
+
+KEY FINDINGS:
+1. Sample-specific distributions show substantial inter-sample variability
+2. Culture condition effects: TSM conditions consistently promote mesenchymal differentiation
+3. Patient source effects: 1914 vs 1919 show distinct baseline patterns
+
+INTERPRETATION:
+Analysis reveals substantial inter-sample variability influenced by both patient source and culture conditions, demonstrating the importance of using multiple samples when interpreting organoid-based studies.
