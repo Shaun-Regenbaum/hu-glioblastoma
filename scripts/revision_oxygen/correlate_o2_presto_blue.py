@@ -101,14 +101,20 @@ class O2PrestoBlueCorrelation:
         
         return merged_data
     
-    def calculate_correlations(self, merged_data, use_normalized=False):
+    def calculate_correlations(self, merged_data, use_normalized=False, exclude_dmso=False):
         """Calculate correlation statistics using numpy"""
-        if use_normalized:
-            o2_values = merged_data['O2_Normalized'].values
-            pb_values = merged_data['Presto_Blue_Normalized'].values
+        # Filter out DMSO if requested
+        if exclude_dmso and 'is_DMSO' in merged_data.columns:
+            data_for_corr = merged_data[~merged_data['is_DMSO']]
         else:
-            o2_values = merged_data['O2_Value'].values
-            pb_values = merged_data['Presto_Blue_Value'].values
+            data_for_corr = merged_data
+            
+        if use_normalized:
+            o2_values = data_for_corr['O2_Normalized'].values
+            pb_values = data_for_corr['Presto_Blue_Normalized'].values
+        else:
+            o2_values = data_for_corr['O2_Value'].values
+            pb_values = data_for_corr['Presto_Blue_Value'].values
         
         # Pearson correlation using numpy
         correlation_matrix = np.corrcoef(o2_values, pb_values)
@@ -128,7 +134,7 @@ class O2PrestoBlueCorrelation:
             'linear_slope': slope,
             'linear_intercept': intercept,
             'linear_r_squared': r_squared,
-            'n_wells': len(merged_data)
+            'n_wells': len(data_for_corr)
         }
         
         return stats_dict
@@ -176,12 +182,15 @@ class O2PrestoBlueCorrelation:
         
         timepoint_desc = "avg last 10h" if use_averaged else "latest timepoint"
         norm_desc = " (DMSO-normalized)" if use_normalized else ""
-        ax1.set_title(f'O₂ vs Presto Blue Correlation{norm_desc}\\n({timepoint_desc})', fontsize=14)
+        ax1.set_title(f'Cell Viability vs Oxygen Consumption{norm_desc}\\n({timepoint_desc})', fontsize=14)
         
         # Add statistics text
         stats_text = f"""Pearson r = {stats_dict['pearson_r']:.3f}
 R² = {stats_dict['linear_r_squared']:.3f}
-n = {stats_dict['n_wells']} wells"""
+n = {stats_dict['n_wells']} wells
+
+Negative correlation confirms:
+Higher viability → More O₂ consumption"""
         
         ax1.text(0.05, 0.95, stats_text, transform=ax1.transAxes, 
                 fontsize=10, verticalalignment='top',
@@ -283,6 +292,73 @@ n = {stats_dict['n_wells']} wells"""
         print(f"  By drug: {drug_file}")
         print(f"  Full data: {merged_file}")
     
+    def create_summary_plot(self, merged_data, use_averaged=True):
+        """Create a summary plot showing assay concordance"""
+        fig, ax = plt.subplots(figsize=(10, 8))
+        
+        # Calculate percentage changes relative to DMSO
+        dmso_o2 = merged_data[merged_data['Content'].str.contains('DMSO', na=False)]['O2_Value'].mean()
+        dmso_pb = merged_data[merged_data['Content'].str.contains('DMSO', na=False)]['Presto_Blue_Value'].mean()
+        
+        # Group by drug and calculate means
+        drug_means = []
+        drugs = ['DMSO', 'DACTI', 'PLICA', 'GEMCI', 'VINC']
+        colors = ['red', 'blue', 'green', 'orange', 'purple']
+        
+        for drug, color in zip(drugs, colors):
+            drug_data = merged_data[merged_data['Content'].str.contains(drug, na=False)]
+            if len(drug_data) > 0:
+                o2_mean = drug_data['O2_Value'].mean()
+                pb_mean = drug_data['Presto_Blue_Value'].mean()
+                
+                # Calculate percent change from DMSO
+                o2_change = ((o2_mean - dmso_o2) / dmso_o2) * 100
+                pb_change = ((pb_mean - dmso_pb) / dmso_pb) * 100
+                
+                drug_means.append({
+                    'drug': drug,
+                    'o2_change': o2_change,
+                    'pb_change': pb_change,
+                    'color': color,
+                    'n': len(drug_data)
+                })
+        
+        # Plot
+        for dm in drug_means:
+            ax.scatter(dm['o2_change'], dm['pb_change'], 
+                      s=200, c=dm['color'], alpha=0.7, edgecolors='black', linewidth=2)
+            ax.annotate(f"{dm['drug']}\n(n={dm['n']})", 
+                       (dm['o2_change'], dm['pb_change']), 
+                       xytext=(5, 5), textcoords='offset points', fontsize=10)
+        
+        # Add diagonal line for perfect concordance
+        ax_min = min(ax.get_xlim()[0], ax.get_ylim()[0])
+        ax_max = max(ax.get_xlim()[1], ax.get_ylim()[1])
+        ax.plot([ax_min, ax_max], [ax_min, ax_max], 'k--', alpha=0.3, label='Perfect concordance')
+        
+        # Add quadrant lines
+        ax.axhline(y=0, color='gray', linestyle='-', alpha=0.3)
+        ax.axvline(x=0, color='gray', linestyle='-', alpha=0.3)
+        
+        ax.set_xlabel('O₂ Change from DMSO (%)', fontsize=12)
+        ax.set_ylabel('Presto Blue Change from DMSO (%)', fontsize=12)
+        ax.set_title('Assay Concordance: O₂ Consumption vs Cell Viability', fontsize=14)
+        
+        # Add interpretation text
+        ax.text(0.02, 0.98, 'Quadrants:\nBoth decrease = Drug effect\nDiscordant = Metabolic disruption', 
+                transform=ax.transAxes, verticalalignment='top',
+                bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
+        
+        plt.tight_layout()
+        
+        # Save
+        timepoint = "avg_10h" if use_averaged else "latest"
+        output_file = self.figures_dir / f'assay_concordance_summary_{timepoint}.png'
+        plt.savefig(output_file, dpi=300, bbox_inches='tight')
+        plt.close()
+        
+        print(f"Created assay concordance plot: {output_file}")
+    
     def run_analysis(self, use_averaged=True, normalize=True):
         """Run complete correlation analysis"""
         print(f"=== O2 vs Presto Blue Correlation Analysis ===")
@@ -307,6 +383,10 @@ n = {stats_dict['n_wells']} wells"""
         # Create plots
         drug_stats = self.create_correlation_plot(merged_data, overall_stats, use_averaged, use_normalized=normalize)
         
+        # Create summary concordance plot (only for non-normalized data)
+        if not normalize:
+            self.create_summary_plot(merged_data, use_averaged)
+        
         # Export results
         self.export_correlation_results(merged_data, overall_stats, drug_stats, use_averaged, use_normalized=normalize)
         
@@ -317,9 +397,20 @@ n = {stats_dict['n_wells']} wells"""
         print(f"  Pearson r = {overall_stats['pearson_r']:.3f}")
         print(f"  R² = {overall_stats['linear_r_squared']:.3f}")
         
+        # Interpret the correlation
+        if overall_stats['pearson_r'] < -0.7:
+            print("  → Strong negative correlation: Viability and O₂ consumption are tightly linked")
+        elif overall_stats['pearson_r'] < -0.4:
+            print("  → Moderate negative correlation: Viability and O₂ consumption are related")
+        
         print(f"\nDrug-specific correlations:")
         for drug, stats in drug_stats.items():
-            print(f"  {drug}: r = {stats['r']:.3f} (n={stats['n']})")
+            correlation_strength = ""
+            if stats['r'] < -0.7:
+                correlation_strength = " (maintains strong viability-O₂ relationship)"
+            elif stats['r'] > -0.3 and stats['r'] < 0.3:
+                correlation_strength = " (disrupts viability-O₂ relationship)"
+            print(f"  {drug}: r = {stats['r']:.3f} (n={stats['n']}){correlation_strength}")
 
 def main():
     analyzer = O2PrestoBlueCorrelation("/Users/shaunie/Desktop/hu-glioblastoma/data/revision")
