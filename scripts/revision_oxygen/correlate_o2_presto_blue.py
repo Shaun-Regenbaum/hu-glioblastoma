@@ -75,10 +75,40 @@ class O2PrestoBlueCorrelation:
         
         return merged
     
-    def calculate_correlations(self, merged_data):
+    def normalize_to_dmso(self, merged_data):
+        """Normalize O2 and Presto Blue values to DMSO controls"""
+        # Calculate DMSO means
+        dmso_data = merged_data[merged_data['Content'].str.contains('DMSO', na=False)]
+        
+        if len(dmso_data) == 0:
+            print("Warning: No DMSO controls found!")
+            return merged_data
+        
+        dmso_o2_mean = dmso_data['O2_Value'].mean()
+        dmso_pb_mean = dmso_data['Presto_Blue_Value'].mean()
+        
+        print(f"\nDMSO control values:")
+        print(f"  O2 mean: {dmso_o2_mean:.2f}")
+        print(f"  Presto Blue mean: {dmso_pb_mean:.2f}")
+        print(f"  n = {len(dmso_data)} DMSO wells")
+        
+        # Normalize values (as percentage of DMSO)
+        merged_data['O2_Normalized'] = (merged_data['O2_Value'] / dmso_o2_mean) * 100
+        merged_data['Presto_Blue_Normalized'] = (merged_data['Presto_Blue_Value'] / dmso_pb_mean) * 100
+        
+        # Add a flag for DMSO wells
+        merged_data['is_DMSO'] = merged_data['Content'].str.contains('DMSO', na=False)
+        
+        return merged_data
+    
+    def calculate_correlations(self, merged_data, use_normalized=False):
         """Calculate correlation statistics using numpy"""
-        o2_values = merged_data['O2_Value'].values
-        pb_values = merged_data['Presto_Blue_Value'].values
+        if use_normalized:
+            o2_values = merged_data['O2_Normalized'].values
+            pb_values = merged_data['Presto_Blue_Normalized'].values
+        else:
+            o2_values = merged_data['O2_Value'].values
+            pb_values = merged_data['Presto_Blue_Value'].values
         
         # Pearson correlation using numpy
         correlation_matrix = np.corrcoef(o2_values, pb_values)
@@ -103,12 +133,16 @@ class O2PrestoBlueCorrelation:
         
         return stats_dict
     
-    def create_correlation_plot(self, merged_data, stats_dict, use_averaged=True):
+    def create_correlation_plot(self, merged_data, stats_dict, use_averaged=True, use_normalized=False):
         """Create scatter plot with correlation statistics"""
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 7))
         
-        o2_values = merged_data['O2_Value'].values
-        pb_values = merged_data['Presto_Blue_Value'].values
+        if use_normalized:
+            o2_values = merged_data['O2_Normalized'].values
+            pb_values = merged_data['Presto_Blue_Normalized'].values
+        else:
+            o2_values = merged_data['O2_Value'].values
+            pb_values = merged_data['Presto_Blue_Value'].values
         
         # Main scatter plot
         colors = []
@@ -133,11 +167,16 @@ class O2PrestoBlueCorrelation:
         y_line = stats_dict['linear_slope'] * x_line + stats_dict['linear_intercept']
         ax1.plot(x_line, y_line, 'black', linestyle='--', alpha=0.8, linewidth=2)
         
-        ax1.set_xlabel('O₂ (% air saturation)', fontsize=12)
-        ax1.set_ylabel('Presto Blue Value', fontsize=12)
+        if use_normalized:
+            ax1.set_xlabel('O₂ (% of DMSO control)', fontsize=12)
+            ax1.set_ylabel('Presto Blue (% of DMSO control)', fontsize=12)
+        else:
+            ax1.set_xlabel('O₂ (% air saturation)', fontsize=12)
+            ax1.set_ylabel('Presto Blue Value', fontsize=12)
         
         timepoint_desc = "avg last 10h" if use_averaged else "latest timepoint"
-        ax1.set_title(f'O₂ vs Presto Blue Correlation\\n({timepoint_desc})', fontsize=14)
+        norm_desc = " (DMSO-normalized)" if use_normalized else ""
+        ax1.set_title(f'O₂ vs Presto Blue Correlation{norm_desc}\\n({timepoint_desc})', fontsize=14)
         
         # Add statistics text
         stats_text = f"""Pearson r = {stats_dict['pearson_r']:.3f}
@@ -163,15 +202,23 @@ n = {stats_dict['n_wells']} wells"""
         drug_colors = {'DMSO': 'red', 'DACTI': 'blue', 'PLICA': 'green', 'GEMCI': 'orange', 'VINC': 'purple'}
         
         y_pos = 0.95
-        ax2.text(0.05, y_pos, 'Drug-specific correlations:', transform=ax2.transAxes, 
+        title_text = 'Drug-specific correlations:' if not use_normalized else 'Drug-specific correlations (vs DMSO baseline):'
+        ax2.text(0.05, y_pos, title_text, transform=ax2.transAxes, 
                 fontsize=12, fontweight='bold')
         y_pos -= 0.08
         
-        for drug, color in drug_colors.items():
+        # For normalized data, optionally skip DMSO or label it differently
+        drugs_to_analyze = drug_colors.items()
+        
+        for drug, color in drugs_to_analyze:
             drug_data = merged_data[merged_data['Content'].str.contains(drug, na=False)]
             if len(drug_data) >= 3:  # Need at least 3 points for meaningful correlation
-                drug_o2 = drug_data['O2_Value'].values
-                drug_pb = drug_data['Presto_Blue_Value'].values
+                if use_normalized:
+                    drug_o2 = drug_data['O2_Normalized'].values
+                    drug_pb = drug_data['Presto_Blue_Normalized'].values
+                else:
+                    drug_o2 = drug_data['O2_Value'].values
+                    drug_pb = drug_data['Presto_Blue_Value'].values
                 
                 # Calculate correlation using numpy
                 drug_corr_matrix = np.corrcoef(drug_o2, drug_pb)
@@ -182,19 +229,28 @@ n = {stats_dict['n_wells']} wells"""
                 ax2.scatter(drug_o2, drug_pb, c=color, alpha=0.7, s=50, label=f'{drug} (n={len(drug_data)})')
                 
                 # Add text
-                ax2.text(0.05, y_pos, f'{drug}: r = {drug_r:.3f} (n={len(drug_data)})', 
+                if use_normalized and drug == 'DMSO':
+                    text = f'{drug}: r = {drug_r:.3f} (n={len(drug_data)}) *control variance'
+                else:
+                    text = f'{drug}: r = {drug_r:.3f} (n={len(drug_data)})'
+                ax2.text(0.05, y_pos, text, 
                         transform=ax2.transAxes, fontsize=10, color=color)
                 y_pos -= 0.06
         
-        ax2.set_xlabel('O₂ (% air saturation)', fontsize=12)
-        ax2.set_ylabel('Presto Blue Value', fontsize=12)
+        if use_normalized:
+            ax2.set_xlabel('O₂ (% of DMSO control)', fontsize=12)
+            ax2.set_ylabel('Presto Blue (% of DMSO control)', fontsize=12)
+        else:
+            ax2.set_xlabel('O₂ (% air saturation)', fontsize=12)
+            ax2.set_ylabel('Presto Blue Value', fontsize=12)
         ax2.set_title('Drug-specific Correlations', fontsize=14)
         
         plt.tight_layout()
         
         # Save plot
         suffix = "_avg_last_10h" if use_averaged else "_latest"
-        output_file = self.figures_dir / f'o2_presto_blue_correlation{suffix}.png'
+        norm_suffix = "_normalized" if use_normalized else ""
+        output_file = self.figures_dir / f'o2_presto_blue_correlation{suffix}{norm_suffix}.png'
         plt.savefig(output_file, dpi=300, bbox_inches='tight')
         plt.close()
         
@@ -202,23 +258,24 @@ n = {stats_dict['n_wells']} wells"""
         
         return drug_stats
     
-    def export_correlation_results(self, merged_data, overall_stats, drug_stats, use_averaged=True):
+    def export_correlation_results(self, merged_data, overall_stats, drug_stats, use_averaged=True, use_normalized=False):
         """Export correlation results to CSV"""
         # Overall results
         overall_df = pd.DataFrame([overall_stats])
         suffix = "_avg_last_10h" if use_averaged else "_latest"
+        norm_suffix = "_normalized" if use_normalized else ""
         
-        overall_file = self.results_dir / f'o2_presto_blue_overall_correlation{suffix}.csv'
+        overall_file = self.results_dir / f'o2_presto_blue_overall_correlation{suffix}{norm_suffix}.csv'
         overall_df.to_csv(overall_file, index=False)
         
         # Drug-specific results
         drug_df = pd.DataFrame.from_dict(drug_stats, orient='index')
         drug_df.index.name = 'Drug'
-        drug_file = self.results_dir / f'o2_presto_blue_drug_correlations{suffix}.csv'
+        drug_file = self.results_dir / f'o2_presto_blue_drug_correlations{suffix}{norm_suffix}.csv'
         drug_df.to_csv(drug_file)
         
         # Full merged dataset
-        merged_file = self.results_dir / f'o2_presto_blue_merged_data{suffix}.csv'
+        merged_file = self.results_dir / f'o2_presto_blue_merged_data{suffix}{norm_suffix}.csv'
         merged_data.to_csv(merged_file, index=False)
         
         print(f"Exported correlation results:")
@@ -226,7 +283,7 @@ n = {stats_dict['n_wells']} wells"""
         print(f"  By drug: {drug_file}")
         print(f"  Full data: {merged_file}")
     
-    def run_analysis(self, use_averaged=True):
+    def run_analysis(self, use_averaged=True, normalize=True):
         """Run complete correlation analysis"""
         print(f"=== O2 vs Presto Blue Correlation Analysis ===")
         timepoint_desc = "averaged last 10h" if use_averaged else "latest timepoint"
@@ -239,17 +296,23 @@ n = {stats_dict['n_wells']} wells"""
             print("No overlapping data found!")
             return
         
+        # Normalize to DMSO if requested
+        if normalize:
+            merged_data = self.normalize_to_dmso(merged_data)
+            print("\nData normalized to DMSO controls")
+        
         # Calculate correlations
-        overall_stats = self.calculate_correlations(merged_data)
+        overall_stats = self.calculate_correlations(merged_data, use_normalized=normalize)
         
         # Create plots
-        drug_stats = self.create_correlation_plot(merged_data, overall_stats, use_averaged)
+        drug_stats = self.create_correlation_plot(merged_data, overall_stats, use_averaged, use_normalized=normalize)
         
         # Export results
-        self.export_correlation_results(merged_data, overall_stats, drug_stats, use_averaged)
+        self.export_correlation_results(merged_data, overall_stats, drug_stats, use_averaged, use_normalized=normalize)
         
         # Print summary
-        print(f"\n=== CORRELATION SUMMARY ===")
+        norm_desc = " (DMSO-normalized)" if normalize else ""
+        print(f"\n=== CORRELATION SUMMARY{norm_desc} ===")
         print(f"Overall correlation (n={overall_stats['n_wells']} wells):")
         print(f"  Pearson r = {overall_stats['pearson_r']:.3f}")
         print(f"  R² = {overall_stats['linear_r_squared']:.3f}")
@@ -261,14 +324,23 @@ n = {stats_dict['n_wells']} wells"""
 def main():
     analyzer = O2PrestoBlueCorrelation("/Users/shaunie/Desktop/hu-glioblastoma/data/revision")
     
-    # Run analysis for both averaged and latest timepoint data
-    print("=== AVERAGED DATA ANALYSIS ===")
-    analyzer.run_analysis(use_averaged=True)
+    # Run analysis with DMSO normalization
+    print("=== DMSO-NORMALIZED ANALYSIS ===")
+    print("\n--- AVERAGED DATA ---")
+    analyzer.run_analysis(use_averaged=True, normalize=True)
     
-    print("\n" + "="*60 + "\n")
+    print("\n--- LATEST TIMEPOINT ---")
+    analyzer.run_analysis(use_averaged=False, normalize=True)
     
-    print("=== LATEST TIMEPOINT ANALYSIS ===")
-    analyzer.run_analysis(use_averaged=False)
+    print("\n" + "="*80 + "\n")
+    
+    # Run analysis without normalization for comparison
+    print("=== RAW DATA ANALYSIS (NO NORMALIZATION) ===")
+    print("\n--- AVERAGED DATA ---")
+    analyzer.run_analysis(use_averaged=True, normalize=False)
+    
+    print("\n--- LATEST TIMEPOINT ---")
+    analyzer.run_analysis(use_averaged=False, normalize=False)
 
 if __name__ == "__main__":
     main()
