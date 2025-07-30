@@ -1,0 +1,283 @@
+Well,Row,Column,Content,Data_Column,O2_Value,Timepoint
+A01,A,1,Empty,,,avg of last 10h
+A02,A,2,Empty,,,avg of last 10h
+A03,A,3,Empty,,,avg of last 10h
+A04,A,4,Empty,,,avg of last 10h
+A05,A,5,Empty,,,avg of last 10h
+A06,A,6,Empty,,,avg of last 10h
+A07,A,7,Empty,,,avg of last 10h
+A08,A,8,Empty,,,avg of last 10h
+A09,A,9,Empty,,,avg of last 10h
+A10,A,10,Empty,,,avg of last 10h
+A11,A,11,Empty,,,avg of last 10h
+A12,A,12,Empty,,,avg of last 10h
+A13,A,13,Empty,,,avg of last 10h
+A14,A,14,Empty,,,avg of last 10h
+A15,A,15,Empty,,,avg of last 10h
+A16,A,16,Empty,,,avg of last 10h
+A17,A,17,Empty,,,avg of last 10h
+A18,A,18,Empty,,,avg of last 10h
+A19,A,19,Empty,,,avg of last 10h
+A20,A,20,Empty,,,avg of last 10h
+A21,A,21,Empty,,,avg of last 10h
+A22,A,22,Empty,,,avg of last 10h
+A23,A,23,Empty,,,avg of last 10h
+A24,A,24,Empty,,,avg of last 10h
+B01,B,1,"DACTI
+0.00222",DACTI_0.002222222_1,13.975,avg of last 10h
+B02,B,2,"DACTI
+0.00222",DACTI_0.002222222_2,13.163636363636362,avg of last 10h
+B03,B,3,Empty,,,avg of last 10h
+B04,B,4,Empty,,,avg of last 10h
+B05,B,5,"DACTI
+0.00667",DACTI_0.006666667_1,16.914285714285715,avg of last 10h
+B06,B,6,"DACTI
+0.00667",DACTI_0.006666667_2,72.57272727272726,avg of last 10h
+B07,B,7,"DACTI
+0.00667",DACTI_0.006666667_3,8.68181818181818,avg of last 10h
+B08,B,8,"DACTI
+0.00667",DACTI_0.006666667_4,18.53636363636364,avg of last 10h
+B09,B,9,"DACTI
+0.02",DACTI_0.02_1,44.88181818181818,avg of last 10h
+B10,B,10,"DACTI
+0.02",DACTI_0.02_2,26.74,avg of last 10h
+B11,B,11,"DACTI
+0.02",DACTI_0.02_3,50.29090909090908,avg of last 10h
+B12,B,12,"DACTI
+0.02",DACTI_0.02_4,50.440000000000005,avg of last 10h
+B13,B,13,"DACTI
+0.06",DACTI_0.06_1,81.86363636363636,avg of last 10h
+B14,B,14,"DACTI
+0.06",DACTI_0.06_2,65.47272727272728,avg of last 10h
+B15,B,15,"DACTI
+0.06",DACTI_0.06_3,65.85454545454546,avg of last 10h
+B16,B,16,"DACTI
+0.06",DACTI_0.06_4,76.46,avg of last 10h
+B17,B,17,"DACTI
+0.18",DACTI_0.18_1,82.34545454545454,avg of last 10h
+B18,B,18,"DACTI
+0.18",DACTI_0.18_2,83.7090909090909,avg of last 10h
+B19,B,19,"DACTI
+0.18",DACTI_0.18_3,73.45,avg of last 10h
+B20,B,20,Empty,,,avg of last 10h
+B21,B,21,DMSO,DMSO_0.011111111_1,41.13636363636363,avg of last 10h
+B22,B,22,DMSO,DMSO_0.011111111_2,10.540000000000001,avg of last 10h
+B23,B,23,Empty,DMSO_0.011111111_3,,avg of last 10h
+B24,B,24,Empty,,,avg of last 10h
+C01,C,1,"PLICA
+0.00111",PLICA_0.001111111_1,5.954545454545454,avg of last 10h
+C02,C,2,"PLICA
+0.00111",PLICA_0.001111111_2,5.672727272727273,avg of last 10h
+C03,C,3,Empty,PLICA_0.001111111_3,,avg of last 10h
+C04,C,4,"PLICA
+0.00111",PLICA_0.001111111_4,12.57272727272727,avg of last 10h
+C05,C,5,"PLICA
+0.00333",PLICA_0.003333333_1,6.780000000000001,avg of last 10h
+C06,C,6,Empty,PLICA_0.003333333_2,,avg of last 10h
+C07,C,7,Empty,PLICA_0.003333333_3,,avg of last 10h
+C08,C,8,"PLICA
+0.00333",PLICA_0.003333333_4,7.7,avg of last 10h
+C09,C,9,Empty,PLICA_0.01_1,,avg of last 10h
+C10,C,10,Empty,PLICA_0.01_2,,avg of last 10h
+C11,C,11,"PLICA
+0.01",PLICA_0.01_3,6.736363636363637,avg of last 10h
+C12,C,12,Empty,PLICA_0.01_4,,avg of last 10h
+C13,C,13,"PLICA
+0.03",PLICA_0.03_1,6.090909090909091,avg of last 10h
+C14,C,14,"PLICA
+0.03",PLICA_0.03_2,4.466666666666667,avg of last 10h
+C15,C,15,"PLICA
+0.03",PLICA_0.03_3,9.03,avg of last 10h
+C16,C,16,"PLICA
+0.03",PLICA_0.03_4,26.085714285714285,avg of last 10h
+C17,C,17,"PLICA
+0.09",PLICA_0.09_1,14.98,avg of last 10h
+C18,C,18,"PLICA
+0.09",PLICA_0.09_2,6.8999999999999995,avg of last 10h
+C19,C,19,Empty,PLICA_0.09_3,,avg of last 10h
+C20,C,20,Empty,PLICA_0.09_4,,avg of last 10h
+C21,C,21,DMSO,DMSO_0.033333333_1,5.1454545454545455,avg of last 10h
+C22,C,22,DMSO,DMSO_0.033333333_2,8.763636363636364,avg of last 10h
+C23,C,23,DMSO,DMSO_0.033333333_3,5.881818181818181,avg of last 10h
+C24,C,24,Empty,,,avg of last 10h
+D01,D,1,"PLICA
+0.00111",PLICA_0.001111111_5,8.466666666666667,avg of last 10h
+D02,D,2,Empty,PLICA_0.001111111_6,,avg of last 10h
+D03,D,3,Empty,,,avg of last 10h
+D04,D,4,Empty,,,avg of last 10h
+D05,D,5,"PLICA
+0.00333",PLICA_0.003333333_5,12.177777777777777,avg of last 10h
+D06,D,6,"PLICA
+0.00333",PLICA_0.003333333_6,21.98,avg of last 10h
+D07,D,7,"PLICA
+0.00333",PLICA_0.003333333_7,6.1899999999999995,avg of last 10h
+D08,D,8,"PLICA
+0.00333",PLICA_0.003333333_8,6.942857142857143,avg of last 10h
+D09,D,9,"PLICA
+0.01",PLICA_0.01_5,4.072727272727273,avg of last 10h
+D10,D,10,"PLICA
+0.01",PLICA_0.01_6,8.154545454545454,avg of last 10h
+D11,D,11,"PLICA
+0.01",PLICA_0.01_7,4.981818181818182,avg of last 10h
+D12,D,12,Empty,PLICA_0.01_8,,avg of last 10h
+D13,D,13,"PLICA
+0.03",PLICA_0.03_5,4.97,avg of last 10h
+D14,D,14,"PLICA
+0.03",PLICA_0.03_6,12.609090909090911,avg of last 10h
+D15,D,15,"PLICA
+0.03",PLICA_0.03_7,3.3272727272727276,avg of last 10h
+D16,D,16,"PLICA
+0.03",PLICA_0.03_8,3.0818181818181816,avg of last 10h
+D17,D,17,Empty,PLICA_0.09_5,,avg of last 10h
+D18,D,18,"PLICA
+0.09",PLICA_0.09_6,8.736363636363636,avg of last 10h
+D19,D,19,Empty,PLICA_0.09_7,,avg of last 10h
+D20,D,20,"PLICA
+0.09",PLICA_0.09_8,10.44,avg of last 10h
+D21,D,21,Empty,,,avg of last 10h
+D22,D,22,Empty,,,avg of last 10h
+D23,D,23,Empty,,,avg of last 10h
+D24,D,24,Empty,,,avg of last 10h
+E01,E,1,"GEMCI
+0.556",GEMCI_0.555555556_1,18.54,avg of last 10h
+E02,E,2,Empty,GEMCI_0.555555556_2,,avg of last 10h
+E03,E,3,"GEMCI
+0.556",GEMCI_0.555555556_3,4.1000000000000005,avg of last 10h
+E04,E,4,"GEMCI
+0.556",GEMCI_0.555555556_4,20.58888888888889,avg of last 10h
+E05,E,5,"GEMCI
+1.67",GEMCI_1.666666667_1,15.329999999999998,avg of last 10h
+E06,E,6,Empty,GEMCI_1.666666667_2,,avg of last 10h
+E07,E,7,Empty,GEMCI_1.666666667_3,,avg of last 10h
+E08,E,8,"GEMCI
+1.67",GEMCI_1.666666667_4,16.585714285714285,avg of last 10h
+E09,E,9,"GEMCI
+5",GEMCI_5.0_1,11.554545454545455,avg of last 10h
+E10,E,10,Empty,GEMCI_5.0_2,,avg of last 10h
+E11,E,11,"GEMCI
+5",GEMCI_5.0_3,7.045454545454546,avg of last 10h
+E12,E,12,"GEMCI
+5",GEMCI_5.0_4,4.8999999999999995,avg of last 10h
+E13,E,13,Empty,GEMCI_15.0_1,,avg of last 10h
+E14,E,14,Empty,GEMCI_15.0_2,,avg of last 10h
+E15,E,15,"GEMCI
+15",GEMCI_15.0_3,4.06,avg of last 10h
+E16,E,16,"GEMCI
+15",GEMCI_15.0_4,5.6454545454545455,avg of last 10h
+E17,E,17,"GEMCI
+45",GEMCI_45.0_1,3.5000000000000004,avg of last 10h
+E18,E,18,"GEMCI
+45",GEMCI_45.0_2,7.872727272727272,avg of last 10h
+E19,E,19,"GEMCI
+45",GEMCI_45.0_3,3.1090909090909093,avg of last 10h
+E20,E,20,"GEMCI
+45",GEMCI_45.0_4,8.629999999999999,avg of last 10h
+E21,E,21,DMSO,DMSO_0.1_1,7.55,avg of last 10h
+E22,E,22,DMSO,DMSO_0.1_2,6.2727272727272725,avg of last 10h
+E23,E,23,DMSO,DMSO_0.1_3,6.954545454545453,avg of last 10h
+E24,E,24,DMSO,DMSO_0.1_4,8.19,avg of last 10h
+F01,F,1,"GEMCI
+0.556",GEMCI_0.555555556_5,5.3545454545454545,avg of last 10h
+F02,F,2,"GEMCI
+0.556",GEMCI_0.555555556_6,6.045454545454546,avg of last 10h
+F03,F,3,Empty,,,avg of last 10h
+F04,F,4,Empty,,,avg of last 10h
+F05,F,5,"GEMCI
+1.67",GEMCI_1.666666667_5,6.972727272727273,avg of last 10h
+F06,F,6,"GEMCI
+1.67",GEMCI_1.666666667_6,12.22,avg of last 10h
+F07,F,7,"GEMCI
+1.67",GEMCI_1.666666667_7,11.081818181818182,avg of last 10h
+F08,F,8,Empty,,,avg of last 10h
+F09,F,9,"GEMCI
+5",GEMCI_5.0_5,23.0,avg of last 10h
+F10,F,10,"GEMCI
+5",GEMCI_5.0_6,13.154545454545456,avg of last 10h
+F11,F,11,Empty,,,avg of last 10h
+F12,F,12,Empty,,,avg of last 10h
+F13,F,13,Empty,GEMCI_15.0_5,,avg of last 10h
+F14,F,14,"GEMCI
+15",GEMCI_15.0_6,10.350000000000001,avg of last 10h
+F15,F,15,Empty,GEMCI_15.0_7,,avg of last 10h
+F16,F,16,"GEMCI
+15",GEMCI_15.0_8,9.227272727272728,avg of last 10h
+F17,F,17,"GEMCI
+45",GEMCI_45.0_5,8.989999999999998,avg of last 10h
+F18,F,18,Empty,GEMCI_45.0_6,,avg of last 10h
+F19,F,19,"GEMCI
+45",GEMCI_45.0_7,15.219999999999999,avg of last 10h
+F20,F,20,Empty,,,avg of last 10h
+F21,F,21,DMSO,DMSO_0.1_5,23.6,avg of last 10h
+F22,F,22,DMSO,DMSO_0.1_6,6.654545454545456,avg of last 10h
+F23,F,23,Empty,,,avg of last 10h
+F24,F,24,Empty,,,avg of last 10h
+G01,G,1,"VINC
+0.167",VINC_0.166666667_1,29.863636363636363,avg of last 10h
+G02,G,2,"VINC
+0.167",VINC_0.166666667_2,49.91818181818182,avg of last 10h
+G03,G,3,"VINC
+0.167",VINC_0.166666667_3,55.78181818181818,avg of last 10h
+G04,G,4,"VINC
+0.167",VINC_0.166666667_4,57.73636363636364,avg of last 10h
+G05,G,5,Empty,VINC_0.5_1,,avg of last 10h
+G06,G,6,"VINC
+0.5",VINC_0.5_2,49.345454545454544,avg of last 10h
+G07,G,7,Empty,VINC_0.5_3,,avg of last 10h
+G08,G,8,"VINC
+0.5",VINC_0.5_4,56.78181818181818,avg of last 10h
+G09,G,9,"VINC
+1.5",VINC_1.5_1,61.42727272727273,avg of last 10h
+G10,G,10,"VINC
+1.5",VINC_1.5_2,58.48181818181819,avg of last 10h
+G11,G,11,Empty,VINC_1.5_3,,avg of last 10h
+G12,G,12,"VINC
+1.5",VINC_1.5_4,57.145454545454534,avg of last 10h
+G13,G,13,Empty,VINC_4.5_1,,avg of last 10h
+G14,G,14,Empty,VINC_4.5_2,,avg of last 10h
+G15,G,15,"VINC
+4.5",VINC_4.5_3,51.72727272727273,avg of last 10h
+G16,G,16,Empty,VINC_4.5_4,,avg of last 10h
+G17,G,17,"VINC
+13.5",VINC_13.5_1,48.95454545454545,avg of last 10h
+G18,G,18,"VINC
+13.5",VINC_13.5_2,57.22222222222222,avg of last 10h
+G19,G,19,"VINC
+13.5",VINC_13.5_3,50.76363636363636,avg of last 10h
+G20,G,20,"VINC
+13.5",VINC_13.5_4,50.290909090909096,avg of last 10h
+G21,G,21,DMSO,DMSO_0.3_1,5.763636363636365,avg of last 10h
+G22,G,22,DMSO,DMSO_0.3_2,10.28888888888889,avg of last 10h
+G23,G,23,DMSO,DMSO_0.3_3,4.781818181818182,avg of last 10h
+G24,G,24,DMSO,DMSO_0.3_4,7.072727272727272,avg of last 10h
+H01,H,1,"VINC
+0.167",VINC_0.166666667_5,60.58181818181818,avg of last 10h
+H02,H,2,Empty,,,avg of last 10h
+H03,H,3,Empty,,,avg of last 10h
+H04,H,4,Empty,,,avg of last 10h
+H05,H,5,"VINC
+0.5",VINC_0.5_5,68.50909090909092,avg of last 10h
+H06,H,6,"VINC
+0.5",VINC_0.5_6,64.97272727272728,avg of last 10h
+H07,H,7,Empty,,,avg of last 10h
+H08,H,8,Empty,,,avg of last 10h
+H09,H,9,"VINC
+1.5",VINC_1.5_5,30.818181818181817,avg of last 10h
+H10,H,10,"VINC
+1.5",VINC_1.5_6,34.83,avg of last 10h
+H11,H,11,Empty,,,avg of last 10h
+H12,H,12,Empty,,,avg of last 10h
+H13,H,13,Empty,VINC_4.5_5,,avg of last 10h
+H14,H,14,"VINC
+4.5",VINC_4.5_6,34.872727272727275,avg of last 10h
+H15,H,15,Empty,,,avg of last 10h
+H16,H,16,Empty,,,avg of last 10h
+H17,H,17,Empty,VINC_13.5_5,,avg of last 10h
+H18,H,18,"VINC
+13.5",VINC_13.5_6,69.3090909090909,avg of last 10h
+H19,H,19,"VINC
+13.5",VINC_13.5_7,71.35454545454546,avg of last 10h
+H20,H,20,Empty,,,avg of last 10h
+H21,H,21,Empty,DMSO_0.3_5,,avg of last 10h
+H22,H,22,Empty,,,avg of last 10h
+H23,H,23,Empty,,,avg of last 10h
+H24,H,24,Empty,,,avg of last 10h
