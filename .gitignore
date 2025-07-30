@@ -27,3 +27,38 @@ output_metrics.csv
 failed_downloads.log
 Drug names classified.csv
 smiles.ipynb
+
+# Data directories
+/data/
+/results/
+/archive/
+
+# System files
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.bak
+*.log
